@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - test@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="test">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="bistro"/>
+    <schema id="3" name="bostro"/>
+    <schema id="4" name="hosting"/>
+    <schema id="5" name="i-w-s"/>
+    <schema id="6" name="i-w-s-logiciel"/>
+    <schema id="7" name="information_schema"/>
+    <schema id="8" name="mysql"/>
+    <schema id="9" name="performance_schema"/>
+    <schema id="10" name="plus"/>
+    <schema id="11" name="yii2advanced"/>
+    <table id="12" parent="1" name="fiches"/>
+    <table id="13" parent="1" name="products"/>
+    <column id="14" parent="12" name="fiche_id">
+      <mandatory>1</mandatory>
+      <data-type>mediumint(8) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="15" parent="12" name="fiche_num">
+      <mandatory>1</mandatory>
+      <data-type>mediumint(8) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="16" parent="12" name="fiche_iws">
+      <mandatory>1</mandatory>
+      <data-type>mediumint(9)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="17" parent="12" name="fiche_mandatnum">
+      <mandatory>1</mandatory>
+      <data-type>varchar(10)|0</data-type>
+      <default-expression>&apos;&apos;</default-expression>
+    </column>
+    <column id="18" parent="12" name="fiche_client_num">
+      <mandatory>1</mandatory>
+      <data-type>mediumint(8) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="19" parent="12" name="fiche_activee">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="20" parent="12" name="fiche_stand_by">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="21" parent="12" name="fiche_type_id">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="22" parent="12" name="fiche_bien_id">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="23" parent="12" name="fiche_bien2_id">
+      <mandatory>1</mandatory>
+      <data-type>smallint(5) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="24" parent="12" name="fiche_ville">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+      <default-expression>&apos;&apos;</default-expression>
+    </column>
+    <column id="25" parent="12" name="fiche_secteur_id">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="26" parent="12" name="fiche_departement_id">
+      <mandatory>1</mandatory>
+      <data-type>char(3)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="27" parent="12" name="fiche_nbchambres">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="28" parent="12" name="fiche_nbpieces">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="29" parent="12" name="fiche_ca">
+      <mandatory>1</mandatory>
+      <data-type>mediumint(8) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="30" parent="12" name="fiche_tdr">
+      <mandatory>1</mandatory>
+      <data-type>smallint(5) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="31" parent="12" name="fiche_dpe_nrj">
+      <mandatory>1</mandatory>
+      <data-type>smallint(5) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="32" parent="12" name="fiche_dpe_ges">
+      <mandatory>1</mandatory>
+      <data-type>smallint(5) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="33" parent="12" name="fiche_superficie_hab">
+      <mandatory>1</mandatory>
+      <data-type>mediumint(8) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="34" parent="12" name="fiche_superficie_terrain">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="35" parent="12" name="fiche_type_de_surface_id">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="36" parent="12" name="fiche_piscine">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="37" parent="12" name="fiche_nbphotos">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+    </column>
+    <column id="38" parent="12" name="fiche_prix">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="39" parent="12" name="fiche_prix_masque">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="40" parent="12" name="fiche_description_francais">
+      <mandatory>1</mandatory>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="41" parent="12" name="fiche_description_anglais">
+      <mandatory>1</mandatory>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="42" parent="12" name="fiche_description_allemand">
+      <mandatory>1</mandatory>
+      <data-type>text|0</data-type>
+    </column>
+    <column id="43" parent="12" name="fiche_date_creation">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+      <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
+    </column>
+    <column id="44" parent="12" name="fiche_date_fin_contrat">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+      <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
+    </column>
+    <column id="45" parent="12" name="fiche_adresse">
+      <mandatory>1</mandatory>
+      <data-type>varchar(150)|0</data-type>
+    </column>
+    <column id="46" parent="12" name="fiche_cp">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+      <default-expression>&apos;&apos;</default-expression>
+    </column>
+    <column id="47" parent="12" name="fiche_villereal">
+      <mandatory>1</mandatory>
+      <data-type>varchar(50)|0</data-type>
+      <default-expression>&apos;&apos;</default-expression>
+    </column>
+    <column id="48" parent="12" name="fiche_pays">
+      <mandatory>1</mandatory>
+      <data-type>char(2)|0</data-type>
+      <default-expression>&apos;FR&apos;</default-expression>
+    </column>
+    <column id="49" parent="12" name="fiche_region">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(4)|0</data-type>
+      <default-expression>&apos;1&apos;</default-expression>
+    </column>
+    <column id="50" parent="12" name="fiche_national">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(4)|0</data-type>
+      <default-expression>&apos;1&apos;</default-expression>
+    </column>
+    <column id="51" parent="12" name="fiche_prestige">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(4)|0</data-type>
+      <default-expression>&apos;0&apos;</default-expression>
+    </column>
+    <column id="52" parent="12" name="fiche_site_client">
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+    </column>
+    <column id="53" parent="12" name="fiche_lang_ref">
+      <comment>langue_id de reference utilisé pour les traductions des descriptifs</comment>
+      <mandatory>1</mandatory>
+      <data-type>tinyint(3) unsigned|0</data-type>
+      <default-expression>&apos;1&apos;</default-expression>
+    </column>
+    <column id="54" parent="12" name="fiche_lang_ref_date">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+      <default-expression>&apos;0000-00-00 00:00:00&apos;</default-expression>
+    </column>
+    <index id="55" parent="12" name="fiche_activee_2">
+      <columns>fiche_activee
+fiche_stand_by
+fiche_date_fin_contrat</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="56" parent="12" name="fiche_activee_3">
+      <columns>fiche_activee
+fiche_stand_by
+fiche_type_id
+fiche_bien_id
+fiche_departement_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="57" parent="12" name="fiche_client_num">
+      <columns>fiche_client_num</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="58" parent="12" name="fiche_client_num_2">
+      <columns>fiche_client_num
+fiche_activee
+fiche_stand_by
+fiche_date_fin_contrat</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="59" parent="12" name="fiche_departement_id">
+      <columns>fiche_departement_id
+fiche_villereal</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="60" parent="12" name="fiche_departement_id_2">
+      <columns>fiche_departement_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="61" parent="12" name="fiche_num">
+      <columns>fiche_num</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <index id="62" parent="12" name="fiche_villereal">
+      <columns>fiche_villereal</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="63" parent="12" name="fiche_villereal_2">
+      <columns>fiche_villereal</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="64" parent="12" name="Nombre_annonce_regionaux">
+      <columns>fiche_departement_id
+fiche_region
+fiche_pays
+fiche_activee
+fiche_stand_by
+fiche_date_fin_contrat</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="65" parent="12" name="PRIMARY">
+      <columns>fiche_id</columns>
+      <primary>1</primary>
+    </key>
+    <key id="66" parent="12" name="fiche_num">
+      <columns>fiche_num</columns>
+      <underlying-index>fiche_num</underlying-index>
+    </key>
+    <column id="67" parent="13" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="68" parent="13" name="product_name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="69" parent="13" name="product_price">
+      <data-type>float|0</data-type>
+    </column>
+    <column id="70" parent="13" name="product_description">
+      <data-type>text|0</data-type>
+    </column>
+    <key id="71" parent="13" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>

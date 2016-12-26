@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        .listing-header > .row > div > a > span:nth-child(2) {
+            border: 1px solid #ffa016;
+            border-radius: 10px;
+            background: #D48B29;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            color: #ded8a5;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+
+        .listing-header > .row > div > a > span:nth-child(2):hover {
+            border: 1px solid #ffa016;
+            border-radius: 15 pxpx;
+            background: #ffdc70;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+            color: #de9e13;
+            font-size: 20px;
+            font-weight: bolder;
+        }
+
+        header ul li {
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        header > ul > li {
+            vertical-align: middle;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            display: inline-block;
+        }
+
+        .container > .grid-item > .row {
+            max-width: 100%;
+            display: inline-flex;
+            vertical-align: middle;
+            margin: auto;
+        }
+
+        .container > .grid-item > .row > div {
+            min-height: 30px;
+            min-width: 50px;
+            border: 1px solid #987654;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .container > .grid-item > .row > div > input {
+            min-height: 30px;
+            min-width: 50px;
+            border: 1px solid #987654;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .listing-header {
+            background: burlywood;
+        }
+
+        .listing-body {
+            background: #ded8a5;
+        }
+
+        .container > .grid-item > .row > div:first-child {
+            width: 80px;
+        }
+
+        .container > .grid-item > .row > div:nth-child(2) {
+            width: 100px;
+        }
+
+        .container > .grid-item > .row > div:nth-child(3) {
+            width: 100px;
+        }
+
+        .container > .grid-item > .row > div:nth-child(4) {
+            width: 300px;
+        }
+
+        .container > .grid-item > .row > div:nth-child(5) {
+            width: 200px;
+        }
+
+        .object_action {
+            text-align: center;
+        }
+
+        .object_action ul li {
+            display: inline-block;
+            list-style-type: none;
+            text-align: center;
+
+        }
+
+        /*.container >.listing-header>.row >div:nth-child(2) a*/
+
+    </style>
+    <title>Test</title>
+</head>
+<body>
+<header>
+    <ul>
+        <li>
+            <a href="#create" onclick="$('#listing').hide(); $('#create').show()">Create new</a>
+        </li>
+        <li>
+            <a href="#listing" onclick="$('#create').hide(); $('#listing').show()">Listing</a>
+        </li>
+    </ul>
+</header>
+<section id="create">
+    <div class="content">
+        <div class="form-group">
+            <label for="product_name">Name</label>
+            <input id="product_name" class="form-control" type="text" name="product_name" placeholder="Name" value="">
+            <span></span>
+        </div>
+        <div class="form-group">
+            <label for="product_price">Price</label>
+            <input id="product_price" class="form-control" type="text" name="product_price" placeholder="Price"
+                   value="">
+            <span></span>
+        </div>
+        <div class="form-group">
+            <textarea id="product_description" name="product_description" class="form-control"
+                      placeholder="Description"></textarea>
+            <span></span>
+        </div>
+        <input type="button" onclick="insertData()" value="Create">
+    </div>
+</section>
+<section id="listing">
+    <div class="container">
+        <div class="grid-item listing-header">
+            <div class="row">
+                <div class="header_id">
+                    <a href="#" onclick="sorting(this)">
+                        <span>id</span>
+                        <span>&nbsp;&uarr;&nbsp;</span>
+                    </a>
+                </div>
+                <div class="header_name">
+                    <a href="#" onclick="sorting(this)">
+                        <span>Name</span>
+                        <span>&nbsp;&uarr;&nbsp;</span>
+                    </a>
+                </div>
+                <div class="header_price">
+                    <a href="#" onclick="sorting(this)">
+                        <span>Price</span>
+                        <span>&nbsp;&uarr;&nbsp;</span>
+                    </a>
+                </div>
+                <div class="header_description">
+                    <a href="#" onclick="sorting(this)">
+                        <span>Description</span>
+                        <span>&nbsp;&uarr;&nbsp;</span>
+                    </a>
+                </div>
+                <div class="header_action">
+                    <span>Action</span>
+                </div>
+            </div>
+        </div>
+        <div class="grid-item listing-body">
+
+        </div>
+        <div class="footer">
+
+        </div>
+    </div>
+</section>
+<section id="edit">
+
+</section>
+
+
+<script type="text/javascript">
+
+    const METHOD_POST = "POST";
+    const METHOD_GET = "GET";
+    var error = 0,
+            ids = [],
+            productes = [];
+
+    getListing();
+
+    function AjaxInit(data, method) {
+        $.ajax({
+            type: method,
+            url: "ajaxInit.php",
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            async: false,
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (typeof data.cmd === 'undefined') {
+                    productes = data;
+                    data.forEach(function (val, k) {
+                        ids.push(val.product_id);
+                        addingData(val);
+                    })
+                } else {
+                    switch (data.cmd) {
+                        case 'insertData':
+                            addingData(data);
+                            $('input[name=product_name]').val('');
+                            $('input[name=product_price]').val('');
+                            $('#product_description').val('');
+                            productes.push(data);
+                            break;
+                        case 'editData':
+                            addingData(data);
+                            break;
+                        case 'deleteData':
+                            deleteRow(data.product_id);
+                            break;
+                    }
+                    addingData(data);
+
+                }
+            },
+            beforeSend: function () {
+
+            }
+            ,
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+
+    function insertData() {
+        error = 0;
+        var product = {
+            cmd: 'insertData',
+            product_name: $('input[name=product_name]').val(),
+            product_price: $('input[name=product_price]').val(),
+            product_description: $('#product_description').val()
+        };
+
+        AjaxInit(product, METHOD_POST);
+    }
+
+    function editData(edited) {
+        var product = createObject(edited);
+        error = 0;
+        product.cmd = "editData";
+        AjaxInit(product, METHOD_POST);
+    }
+
+    function deleteData(id) {
+
+        var elemId = $('#' + id).children('.object_id').children('span').text();
+//        console.log(elemId);
+        error = 0;
+        var product = {
+            cmd: 'deleteData',
+            product_id: parseInt(elemId)
+        };
+
+        AjaxInit(product, METHOD_POST);
+    }
+
+    function showData(id) {
+        error = 0;
+        var product = {
+            cmd: 'showData',
+            product_id: id
+        };
+        AjaxInit(product, METHOD_POST);
+    }
+
+    function changeForEdit(editd, className) {
+
+        var thisVal = $('#' + editd + '> .' + className + ' >span').text(),
+                mainDiv = $('#' + editd);
+
+        mainDiv.children('.' + className)
+                .html('<input value="' + thisVal + '">')
+                .on('change', function () {
+
+                    var newVal = mainDiv.children('.' + className).children('input').val();
+                    mainDiv.children('.' + className).html('<span>' + newVal + '</span>')
+
+                });
+
+    }
+
+    function createObject(editd) {
+
+        var product = {
+            product_id: parseInt($('#' + editd + '> .object_id >span').text()),
+            product_name: $('#' + editd + '>.object_name >span').text(),
+            product_price: parseFloat($('#' + editd + '>.object_price >span').text()),
+            product_description: $('#' + editd + '>.object_description >span').text()
+        };
+
+        return product;
+    }
+
+    /**
+     * This function use to edit or add item
+     * @param data
+     */
+    function addingData(data) {
+        if (typeof data.product_id === 'number') {
+            var element = $('#obj-' + data.product_id);
+            if (element.length > 0) {
+                element.children('.object_id').children('span').text(data.product_id);
+                element.children('.object_name').children('span').text(data.product_name);
+                element.children('.object_price').children('span').text(data.product_price);
+                element.children('.object_description').children('span').text(data.product_description);
+            } else {
+
+                $('.listing-body').append('<div id="obj-' + data.product_id + '" class="row obj-id">' +
+                        '<div class="object_id" ondblclick="changeForEdit(this.closest(\'.row\').id, this.className)">' +
+                        '<span>' + data.product_id + '</span>' +
+                        '</div>' +
+                        '<div class="object_name" ondblclick="changeForEdit(this.closest(\'.row\').id, this.className)">' +
+                        '<span>' + data.product_name + '</span>' +
+                        '</div>' +
+                        '<div class="object_price" ondblclick="changeForEdit(this.closest(\'.row\').id, this.className)">' +
+                        '<span>' + data.product_price + '</span>' +
+                        '</div>' +
+                        '<div class="object_description" ondblclick="changeForEdit(this.closest(\'.row\').id, this.className)">' +
+                        '<span>' + data.product_description + '</span>' +
+                        '</div>' +
+                        '<div class="object_action">' +
+                        '<ul>' +
+                        '<li><button value="show" onclick="showData(this.closest(\'.row\').id)">show</button></li>' +
+                        '<li><button value="edit" onclick="editData(this.closest(\'.row\').id)">edit</button></li>' +
+                        '<li><button value="delete" onclick="deleteData(this.closest(\'.row\').id)">delete</button></li>' +
+                        '</ul>' +
+                        '</div>' +
+                        '</div>');
+            }
+        }
+    }
+
+    function deleteRow(elemId) {
+        $('#obj-' + elemId).remove();
+    }
+    function sorting(param) {
+        console.log(param.children('span'));
+    }
+
+    function getListing() {
+        var data = {cmd: 'getListing'};
+        AjaxInit(data, METHOD_GET)
+    }
+    var newListing = [];
+    productes.forEach(function (val, k) {
+
+        newListing[productes.length - k] = (val);
+    });
+    console.log(newListing);
+
+    /*var t = $('.object_id>span');
+     $.each(t, function (o,v) {
+
+     ids.push(parseInt(v.innerText));
+     });
+     console.log(ids);*/
+    console.log(ids);
+</script>
+</body>
+</html>

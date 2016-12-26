@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tax Armenian</title>
+    <link type="text/css" rel="stylesheet" href="viuew/css/bootstrap.min.css">
+</head>
+<body>
+<section id="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 login-form">
+                <form name="register">
+                    <div class="form-group">
+                        <label for="username">Email address</label>
+                        <input type="text" class="form-control" required="required" id="username" placeholder="Email" name="username" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" required="required" placeholder="Password" name="password" value="">
+                    </div>
+                    <button type="button" class="btn btn-default" onclick="login()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript" src="viuew/js/jquery.min.js"></script>
+<script type="text/javascript" src="viuew/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    const METHOD_POST = "POST";
+    const METHOD_GET = "GET";
+    checkUser();
+    function checkUser() {
+        var data = {cmd:'checkUser'};
+        AjaxInit(data, METHOD_GET)
+    }
+
+    function login() {
+        var username = $('input[name=username]').val();
+        var pass = $('input[name=password]').val();
+
+        if(typeof username != 'string' || typeof pass != 'string'){
+            $('.login-form').append('<div class="col-md-8 error"><p>failed</p></div>')
+        }else {
+            $('.error').hide();
+            var data = {cmd:'login', username:username, pass:pass};
+            AjaxInit(data, METHOD_POST)
+        }
+    }
+
+    function register() {
+        var username = $('input[name=username]').val();
+        var pass = $('input[name=password]').val();
+        var r_password = $('input[name=r_password]').val();
+
+        if(typeof username != 'string' || typeof pass != 'string' || typeof r_password != 'string' || pass != r_password){
+            $('.login-form').append('<div class="col-md-8 error"><p>failed</p></div>')
+        }else {
+            $('.error').hide();
+            var data = {cmd:'register', username:username, pass:pass, rpass:r_password};
+            AjaxInit(data, METHOD_POST)
+        }
+
+    }
+
+    function AjaxInit(data, method) {
+        $.ajax({
+            type: method,
+            url: "login.php",
+            contentType: 'application/json; charset=utf-8',
+            dataType: "json",
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (typeof data.cmd === 'undefined') {
+                    productes = data;
+                    data.forEach(function (val, k) {
+                        ids.push(val.product_id);
+                        addingData(val);
+                    })
+                } else {
+                    switch (data.cmd) {
+                        case 'checkUser':
+                            if (data.data == true){
+                                console.log(window.location.href);
+                                window.location.replace(window.location.href +"listing.php");
+                            }
+
+                            break;
+                        case 'login':
+                            afterLogin(data);
+                            break;
+                        case 'register':
+                            afterLogin(data);
+                            break;
+                        case 'insertData':
+                            addingData(data);
+                            $('input[name=product_name]').val('');
+                            $('input[name=product_price]').val('');
+                            $('#product_description').val('');
+                            productes.push(data);
+                            break;
+                        case 'editData':
+                            addingData(data);
+                            break;
+                        case 'deleteData':
+                            deleteRow(data.product_id);
+                            break;
+                    }
+                  //  addingData(data);
+
+                }
+            },
+            beforeSend: function () {
+
+            }
+            ,
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR, textStatus, errorThrown);
+            }
+        });
+    }
+
+    function afterLogin(data) {
+        if(data.is_admin == 1){
+            $('.login-form').remove();
+            $('.row').append(
+    '<div class="col-md-8 login-form">' +
+        '<form name="register">' +
+            '<div class="form-group">' +
+                '<label for="username">Username</label>' +
+                '<input type="text" class="form-control" id="username" required="required" placeholder="Email" name="username" value="">' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label for="password">Password</label>' +
+                '<input type="password" class="form-control" id="password" required="required" minlength="5" placeholder="Password" name="password" value="">' +
+            '</div>' +
+            '<div class="form-group">' +
+                '<label for="r_password">Repptir Password</label>' +
+                '<input type="password" class="form-control" id="r_password" required="required" minlength="5" placeholder="Password" name="r_password" value="">' +
+            '</div>' +
+            '<button type="button" class="btn btn-default" onclick="register()">Submit</button>' +
+        '</form>' +
+    '</div>' +
+                    '');
+        }
+
+    }
+
+
+</script>
+</body>
+</html>
