@@ -27,12 +27,14 @@ $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
 $uploadOk = 1;
 $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-if($imageFileType == 'xml' && is_file($_FILES["fileToUpload"]["name"])){
-    $file = $_FILES["fileToUpload"]["name"];
 
-    $t = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir.$file);
-    $t = chmod($target_dir.$file, 0777);  //changed to add the zero
-    $fileContents = file_get_contents($target_dir.$file);
+if($imageFileType == 'xml' && is_file($_FILES["fileToUpload"]["tmp_name"])){
+    $file = md5($_FILES["fileToUpload"]["name"] . $now);
+    $fileName = $target_dir.$file.'.'.$imageFileType;
+    $t = move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $fileName);
+    $t = chmod($fileName, 0777);  //changed to add the zero
+    $fileContents = file_get_contents($fileName);
+
     $simpleXml = simplexml_load_string($fileContents);
 
     $json = json_encode($simpleXml);
@@ -163,8 +165,14 @@ foreach ($data as $kay=>$values){
 $bookingId = insertBooking();
 insertHeader($header);
 insertFooter($footer);
+$i =1;
 foreach($items as $kay=>$item){
-    insertItem($item);
+
+    if (isset($item['Tarification']['HScode']['Commodity_code']) && !empty($item['Tarification']['HScode']['Commodity_code'])){
+        insertItem($item, $i);
+        $i++;
+    }
+
 }
 
 
@@ -291,13 +299,13 @@ function insertFooter($data){
  * @param $date
  * @return int
  */
-function insertItem($date){
+function insertItem($date, $element){
 
     global $connection, $now, $bookingId;
 
     $sqlItem = '';
-    $sqlItemInsert = 'INSERT INTO item(booking_id';
-    $sqlItemValue = ')VALUES (:booking_id';
+    $sqlItemInsert = 'INSERT INTO item(booking_id, number';
+    $sqlItemValue = ')VALUES (:booking_id, :number';
 
     if(isset($date['Packages']) && isset($date['Packages']['Number_of_packages'])){
         $sqlItemInsert.= ', number_of_packages';
@@ -370,6 +378,7 @@ function insertItem($date){
     $newItem = $connection->prepare($sqlItem);
 
     $newItem->bindParam(':booking_id', $bookingId);
+    $newItem->bindParam(':number', $element);
     isset($number_of_packages)? $newItem->bindParam(':number_of_packages', $number_of_packages):'';
     isset($kind_of_packages_code)? $newItem->bindParam(':kind_of_packages_code', $kind_of_packages_code):'';
     isset($kind_of_packages_name)? $newItem->bindParam(':kind_of_packages_name', $kind_of_packages_name):'';
@@ -387,7 +396,6 @@ function insertItem($date){
 
     $itemId = (int)$connection->lastInsertId();
     try{
-        $newItem->execute();
         $connection->commit();
 
     }catch (Exception $e){
@@ -399,9 +407,10 @@ function insertItem($date){
 
 
 
-    if(isset($date['Attached_documents']) && is_array($date['Attached_documents']) && count($date['Attached_documents'])>0){
+/*    if(isset($date['Attached_documents']) && is_array($date['Attached_documents']) && count($date['Attached_documents'])>0){
 
-    } elseif(isset($date['Tarification']) && is_array($date['Tarification']) && count($date['Tarification'])>0){
+    } else*/
+        if(isset($date['Tarification']) && is_array($date['Tarification']) && count($date['Tarification'])>0){
 
         $insertTarif = 'INSERT INTO tarification(item_id';
         $insertTarifVal = ') VALUES (:item_id';
@@ -511,3 +520,15 @@ function insertItem($date){
     return $itemId;
 
 }
+
+function Redirect($url, $permanent = false)
+{
+    if (headers_sent() === false)
+    {
+        header('Location: ' . $url, true, ($permanent === true) ? 301 : 302);
+    }
+
+    exit();
+}
+
+Redirect("mah.php?items=$i", false);
